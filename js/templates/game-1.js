@@ -1,7 +1,6 @@
 import {renderPageFromTemplate} from '../utils.js';
 
-const template = `<div id="main" class="central__content">
-<header class="header">
+const template = `<header class="header">
 <div class="header__back">
   <button class="back">
     <img src="img/arrow_left.svg" width="45" height="45" alt="Back">
@@ -54,7 +53,6 @@ const template = `<div id="main" class="central__content">
     <li class="stats__result stats__result--unknown"></li>
     <li class="stats__result stats__result--unknown"></li>
   </ul>
-</div>
 </div>
 </div>`;
 

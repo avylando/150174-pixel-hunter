@@ -1,4 +1,4 @@
-import {changeDisplay} from './utils.js';
+import { changeDisplay } from './utils.js';
 import introPage from './templates/intro.js';
 import greetingPage from './templates/greeting.js';
 import rulesPage from './templates/rules.js';
@@ -9,134 +9,130 @@ import statsPage from './templates/stats.js';
 
 function showIntroHandler() {
   const introBtn = document.querySelector(`.intro__asterisk`);
-  introBtn.addEventListener(`click`, () => {
+
+  introBtn.addEventListener(`click`, function handler() {
     changeDisplay(greetingPage);
     showGreetingHandler();
+    this.removeEventListener(`click`, handler);
   });
 }
 
 function showGreetingHandler() {
   const continueBtn = document.querySelector(`.greeting__continue`);
-  continueBtn.addEventListener(`click`, () => {
+
+  continueBtn.addEventListener(`click`, function continueClickHandler() {
     changeDisplay(rulesPage);
     showRulesHandler();
+    this.removeEventListener(`click`, continueClickHandler);
   });
 }
 
 function showRulesHandler() {
-  const backBtn = document.querySelector(`.back`);
   const form = document.querySelector(`.rules__form`);
   const nameInput = form.querySelector(`.rules__input`);
   const goBtn = form.querySelector(`.rules__button`);
 
   form.reset();
 
-  nameInput.addEventListener(`input`, () => {
-    if (nameInput.value === ``) {
-      goBtn.disabled = true;
-    } else {
-      goBtn.disabled = false;
-    }
+  nameInput.addEventListener(`input`, function nameInputHandler() {
+    goBtn.disabled = nameInput.value === `` ? true : false;
+    this.removeEventListener(`input`, nameInputHandler);
   });
 
-  form.addEventListener(`submit`, (evt) => {
+  form.addEventListener(`submit`, function formSubmitHandler(evt) {
     evt.preventDefault();
-    console.dir(gameOnePage);
     changeDisplay(gameOnePage);
     gameOneShowHandler();
+    this.removeEventListener(`submit`, formSubmitHandler);
   });
 
-  backBtn.addEventListener(`click`, () => {
-    changeDisplay(introPage);
-    showIntroHandler();
-  });
+  backBtnListener();
 }
 
 function gameOneShowHandler() {
-  const backBtn = document.querySelector(`.back`);
   const form = document.querySelector(`.game__content`);
-  const inputs = form.querySelectorAll(`input[type='radio']`);
-  const q1Inputs = form.querySelectorAll(`input[name='question1']`);
-  const q2Inputs = form.querySelectorAll(`input[name='question2']`);
+  const inputs = Array.from(form.querySelectorAll(`input[type='radio']`));
+  const q1Inputs = Array.from(form.querySelectorAll(`input[name='question1']`));
+  const q2Inputs = Array.from(form.querySelectorAll(`input[name='question2']`));
 
   let answer1 = false;
   let answer2 = false;
-
-  inputs.forEach((input) => {
+  console.log(answer1);
+  console.log(answer2);
+  inputs.map((input) => {
     input.checked = false;
+  });
 
-    input.addEventListener(`change`, () => {
-      q1Inputs.forEach((el) => {
-        if (el.checked) {
-          answer1 = true;
+  q1Inputs.forEach((el) => {
+    el.addEventListener(`change`, function q1Handler() {
+      if (el.checked) {
+        answer1 = true;
+
+        if (answer2) {
+          changeDisplay(gameTwoPage);
+          gameTwoShowHandler();
+          this.removeEventListener(`change`, q1Handler);
         }
-      });
-
-      q2Inputs.forEach((el) => {
-        if (el.checked) {
-          answer2 = true;
-        }
-      });
-
-      if (answer1 && answer2) {
-        changeDisplay(gameTwoPage);
-        gameTwoShowHandler();
       }
     });
   });
 
-  backBtn.addEventListener(`click`, () => {
-    changeDisplay(introPage);
-    showIntroHandler();
+  q2Inputs.forEach((el) => {
+    el.addEventListener(`change`, function q2Handler() {
+      if (el.checked) {
+        answer2 = true;
+
+        if (answer1) {
+          changeDisplay(gameTwoPage);
+          gameTwoShowHandler();
+          this.removeEventListener(`change`, q2Handler);
+        }
+      }
+    });
   });
 
-
+  backBtnListener();
 }
 
 function gameTwoShowHandler() {
-  const backBtn = document.querySelector(`.back`);
   const inputs = document.querySelectorAll(`input[type='radio']`);
 
   inputs.forEach((input) => {
     input.checked = false;
 
-    input.addEventListener(`change`, () => {
+    input.addEventListener(`change`, function handler() {
       if (input.checked) {
         changeDisplay(gameThreePage);
         gameThreeShowHandler();
+        this.removeEventListener(`change`, handler);
       }
     });
   });
 
-  backBtn.addEventListener(`click`, () => {
-    changeDisplay(introPage);
-    showIntroHandler();
-  });
+  backBtnListener();
 }
 
 function gameThreeShowHandler() {
-  const backBtn = document.querySelector(`.back`);
   const options = document.querySelectorAll(`.game__option`);
 
   options.forEach((option) => {
-    option.addEventListener(`click`, () => {
+    option.addEventListener(`click`, function handler() {
       changeDisplay(statsPage);
-      statsShowHandler();
+      backBtnListener();
+      this.removeEventListener(`click`, handler);
     });
   });
 
-  backBtn.addEventListener(`click`, () => {
-    changeDisplay(introPage);
-    showIntroHandler();
-  });
+  backBtnListener();
 }
 
-function statsShowHandler() {
+function backBtnListener() {
   const backBtn = document.querySelector(`.back`);
 
-  backBtn.addEventListener(`click`, () => {
+  backBtn.addEventListener(`click`, function btnClickHandler() {
     changeDisplay(introPage);
     showIntroHandler();
+    this.removeEventListener(`click`, btnClickHandler);
   });
 }
 
