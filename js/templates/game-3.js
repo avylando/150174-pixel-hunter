@@ -1,4 +1,4 @@
-import {renderPageFromTemplate} from '../utils.js';
+import {createContentFromString} from '../utils.js';
 
 const template = `<header class="header">
 <div class="header__back">
@@ -43,6 +43,9 @@ const template = `<header class="header">
 </div>
 </div>`;
 
-const page = renderPageFromTemplate(template);
+const page = createContentFromString(template);
 
-export default page;
+export default () => {
+  const clone = page.cloneNode(true);
+  return clone;
+};

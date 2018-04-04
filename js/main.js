@@ -1,55 +1,64 @@
-import { changeDisplay } from './utils.js';
-import introPage from './templates/intro.js';
-import greetingPage from './templates/greeting.js';
-import rulesPage from './templates/rules.js';
-import gameOnePage from './templates/game-1.js';
-import gameTwoPage from './templates/game-2.js';
-import gameThreePage from './templates/game-3.js';
-import statsPage from './templates/stats.js';
+import {changeDisplay} from './utils.js';
+import renderIntro from './templates/intro.js';
+import renderGreeting from './templates/greeting.js';
+import renderRules from './templates/rules.js';
+import renderGameOne from './templates/game-1.js';
+import renderGameTwo from './templates/game-2.js';
+import renderGameThree from './templates/game-3.js';
+import renderStats from './templates/stats.js';
 
-function showIntroHandler() {
+function backBtnListener() {
+  const backBtn = document.querySelector(`.back`);
+
+  backBtn.addEventListener(`click`, function () {
+    changeDisplay(renderIntro());
+    introPreset();
+  });
+}
+
+
+function introPreset() {
   const introBtn = document.querySelector(`.intro__asterisk`);
 
-  introBtn.addEventListener(`click`, function handler() {
-    changeDisplay(greetingPage);
-    showGreetingHandler();
-    this.removeEventListener(`click`, handler);
+  introBtn.addEventListener(`click`, function () {
+    changeDisplay(renderGreeting());
+    greetingPreset();
   });
 }
 
-function showGreetingHandler() {
+
+function greetingPreset() {
   const continueBtn = document.querySelector(`.greeting__continue`);
 
-  continueBtn.addEventListener(`click`, function continueClickHandler() {
-    changeDisplay(rulesPage);
-    showRulesHandler();
-    this.removeEventListener(`click`, continueClickHandler);
+  continueBtn.addEventListener(`click`, function () {
+    changeDisplay(renderRules());
+    rulesPreset();
   });
 }
 
-function showRulesHandler() {
+
+function rulesPreset() {
   const form = document.querySelector(`.rules__form`);
   const nameInput = form.querySelector(`.rules__input`);
   const goBtn = form.querySelector(`.rules__button`);
 
   form.reset();
 
-  nameInput.addEventListener(`input`, function nameInputHandler() {
+  nameInput.addEventListener(`input`, function () {
     goBtn.disabled = nameInput.value === `` ? true : false;
-    this.removeEventListener(`input`, nameInputHandler);
   });
 
-  form.addEventListener(`submit`, function formSubmitHandler(evt) {
+  form.addEventListener(`submit`, function (evt) {
     evt.preventDefault();
-    changeDisplay(gameOnePage);
-    gameOneShowHandler();
-    this.removeEventListener(`submit`, formSubmitHandler);
+    changeDisplay(renderGameOne());
+    gameOnePreset();
   });
 
   backBtnListener();
 }
 
-function gameOneShowHandler() {
+
+function gameOnePreset() {
   const form = document.querySelector(`.game__content`);
   const inputs = Array.from(form.querySelectorAll(`input[type='radio']`));
   const q1Inputs = Array.from(form.querySelectorAll(`input[name='question1']`));
@@ -57,8 +66,7 @@ function gameOneShowHandler() {
 
   let answer1 = false;
   let answer2 = false;
-  console.log(answer1);
-  console.log(answer2);
+
   inputs.map((input) => {
     input.checked = false;
   });
@@ -69,9 +77,8 @@ function gameOneShowHandler() {
         answer1 = true;
 
         if (answer2) {
-          changeDisplay(gameTwoPage);
-          gameTwoShowHandler();
-          this.removeEventListener(`change`, q1Handler);
+          changeDisplay(renderGameTwo());
+          gameTwoPreset();
         }
       }
     });
@@ -83,9 +90,8 @@ function gameOneShowHandler() {
         answer2 = true;
 
         if (answer1) {
-          changeDisplay(gameTwoPage);
-          gameTwoShowHandler();
-          this.removeEventListener(`change`, q2Handler);
+          changeDisplay(renderGameTwo());
+          gameTwoPreset();
         }
       }
     });
@@ -94,17 +100,17 @@ function gameOneShowHandler() {
   backBtnListener();
 }
 
-function gameTwoShowHandler() {
+
+function gameTwoPreset() {
   const inputs = document.querySelectorAll(`input[type='radio']`);
 
   inputs.forEach((input) => {
     input.checked = false;
 
-    input.addEventListener(`change`, function handler() {
+    input.addEventListener(`change`, function () {
       if (input.checked) {
-        changeDisplay(gameThreePage);
-        gameThreeShowHandler();
-        this.removeEventListener(`change`, handler);
+        changeDisplay(renderGameThree());
+        gameThreePreset();
       }
     });
   });
@@ -112,29 +118,19 @@ function gameTwoShowHandler() {
   backBtnListener();
 }
 
-function gameThreeShowHandler() {
+
+function gameThreePreset() {
   const options = document.querySelectorAll(`.game__option`);
 
   options.forEach((option) => {
     option.addEventListener(`click`, function handler() {
-      changeDisplay(statsPage);
+      changeDisplay(renderStats());
       backBtnListener();
-      this.removeEventListener(`click`, handler);
     });
   });
 
   backBtnListener();
 }
 
-function backBtnListener() {
-  const backBtn = document.querySelector(`.back`);
-
-  backBtn.addEventListener(`click`, function btnClickHandler() {
-    changeDisplay(introPage);
-    showIntroHandler();
-    this.removeEventListener(`click`, btnClickHandler);
-  });
-}
-
-changeDisplay(introPage);
-showIntroHandler();
+changeDisplay(renderIntro());
+introPreset();

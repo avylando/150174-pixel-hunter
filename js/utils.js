@@ -1,4 +1,4 @@
-const renderPageFromTemplate = (stringTemplate) => {
+const createContentFromString = (stringTemplate) => {
   const element = document.createElement(`template`);
   element.innerHTML = stringTemplate;
   return element.content;
@@ -11,4 +11,4 @@ const changeDisplay = (content) => {
 };
 
 
-export {renderPageFromTemplate, changeDisplay};
+export {createContentFromString, changeDisplay};
