@@ -1,0 +1,1631 @@
+{
+  "errors": [],
+  "warnings": [],
+  "version": "4.4.1",
+  "hash": "b87888c4f2c2fba88e5d",
+  "time": 2838,
+  "builtAt": 1522920357599,
+  "publicPath": "",
+  "outputPath": "C:\\github\\pixelhunter/build/js",
+  "assetsByChunkName": {
+    "main": [
+      "app.js",
+      "app.js.map"
+    ]
+  },
+  "assets": [
+    {
+      "name": "app.js",
+      "size": 25221,
+      "chunks": [
+        "main"
+      ],
+      "chunkNames": [
+        "main"
+      ],
+      "emitted": true
+    },
+    {
+      "name": "app.js.map",
+      "size": 25840,
+      "chunks": [
+        "main"
+      ],
+      "chunkNames": [
+        "main"
+      ],
+      "emitted": true
+    }
+  ],
+  "filteredAssets": 0,
+  "entrypoints": {
+    "main": {
+      "chunks": [
+        "main"
+      ],
+      "assets": [
+        "app.js",
+        "app.js.map"
+      ]
+    }
+  },
+  "chunks": [
+    {
+      "id": "main",
+      "rendered": true,
+      "initial": true,
+      "entry": true,
+      "size": 16635,
+      "names": [
+        "main"
+      ],
+      "files": [
+        "app.js",
+        "app.js.map"
+      ],
+      "hash": "8f04891e45b831d05216",
+      "siblings": [],
+      "parents": [],
+      "children": [],
+      "modules": [
+        {
+          "id": "./js/main.js",
+          "identifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+          "name": "./js/main.js",
+          "index": 0,
+          "index2": 8,
+          "size": 3281,
+          "cacheable": true,
+          "built": true,
+          "optional": false,
+          "prefetched": false,
+          "chunks": [
+            "main"
+          ],
+          "issuer": null,
+          "issuerId": null,
+          "issuerName": null,
+          "issuerPath": null,
+          "profile": {
+            "factory": 66,
+            "building": 2501
+          },
+          "failed": false,
+          "errors": 0,
+          "warnings": 0,
+          "assets": [],
+          "reasons": [
+            {
+              "moduleId": null,
+              "moduleIdentifier": null,
+              "module": null,
+              "moduleName": null,
+              "type": "single entry",
+              "userRequest": "./js/main.js",
+              "loc": "main"
+            }
+          ],
+          "providedExports": [],
+          "optimizationBailout": [],
+          "depth": 0,
+          "source": "import { changeDisplay } from './utils.js';\nimport renderIntro from './templates/intro.js';\nimport renderGreeting from './templates/greeting.js';\nimport renderRules from './templates/rules.js';\nimport renderGameOne from './templates/game-1.js';\nimport renderGameTwo from './templates/game-2.js';\nimport renderGameThree from './templates/game-3.js';\nimport renderStats from './templates/stats.js';\n\nfunction backBtnListener() {\n  const backBtn = document.querySelector(`.back`);\n\n  backBtn.addEventListener(`click`, function () {\n    changeDisplay(renderIntro());\n    introPreset();\n  });\n}\n\nfunction introPreset() {\n  const introBtn = document.querySelector(`.intro__asterisk`);\n\n  introBtn.addEventListener(`click`, function () {\n    changeDisplay(renderGreeting());\n    greetingPreset();\n  });\n}\n\nfunction greetingPreset() {\n  const continueBtn = document.querySelector(`.greeting__continue`);\n\n  continueBtn.addEventListener(`click`, function () {\n    changeDisplay(renderRules());\n    rulesPreset();\n  });\n}\n\nfunction rulesPreset() {\n  const form = document.querySelector(`.rules__form`);\n  const nameInput = form.querySelector(`.rules__input`);\n  const goBtn = form.querySelector(`.rules__button`);\n\n  form.reset();\n\n  nameInput.addEventListener(`input`, function () {\n    goBtn.disabled = nameInput.value === `` ? true : false;\n  });\n\n  form.addEventListener(`submit`, function (evt) {\n    evt.preventDefault();\n    changeDisplay(renderGameOne());\n    gameOnePreset();\n  });\n\n  backBtnListener();\n}\n\nfunction gameOnePreset() {\n  const form = document.querySelector(`.game__content`);\n  const inputs = Array.from(form.querySelectorAll(`input[type='radio']`));\n  const q1Inputs = Array.from(form.querySelectorAll(`input[name='question1']`));\n  const q2Inputs = Array.from(form.querySelectorAll(`input[name='question2']`));\n\n  let answer1 = false;\n  let answer2 = false;\n\n  inputs.map(input => {\n    input.checked = false;\n  });\n\n  q1Inputs.forEach(el => {\n    el.addEventListener(`change`, function q1Handler() {\n      if (el.checked) {\n        answer1 = true;\n\n        if (answer2) {\n          changeDisplay(renderGameTwo());\n          gameTwoPreset();\n        }\n      }\n    });\n  });\n\n  q2Inputs.forEach(el => {\n    el.addEventListener(`change`, function q2Handler() {\n      if (el.checked) {\n        answer2 = true;\n\n        if (answer1) {\n          changeDisplay(renderGameTwo());\n          gameTwoPreset();\n        }\n      }\n    });\n  });\n\n  backBtnListener();\n}\n\nfunction gameTwoPreset() {\n  const inputs = document.querySelectorAll(`input[type='radio']`);\n\n  inputs.forEach(input => {\n    input.checked = false;\n\n    input.addEventListener(`change`, function () {\n      if (input.checked) {\n        changeDisplay(renderGameThree());\n        gameThreePreset();\n      }\n    });\n  });\n\n  backBtnListener();\n}\n\nfunction gameThreePreset() {\n  const options = document.querySelectorAll(`.game__option`);\n\n  options.forEach(option => {\n    option.addEventListener(`click`, function handler() {\n      changeDisplay(renderStats());\n      backBtnListener();\n    });\n  });\n\n  backBtnListener();\n}\n\nif (LANG == 'ru') {\n  console.log('Приветики)');\n};\n\nconsole.log(JSON.stringify(LANG));\n\nif (LANG == 'en') {\n  console.log('Хаюшки)');\n};\n\nchangeDisplay(renderIntro());\nintroPreset();"
+        },
+        {
+          "id": "./js/templates/game-1.js",
+          "identifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\templates\\game-1.js",
+          "name": "./js/templates/game-1.js",
+          "index": 5,
+          "index2": 4,
+          "size": 2391,
+          "cacheable": true,
+          "built": true,
+          "optional": false,
+          "prefetched": false,
+          "chunks": [
+            "main"
+          ],
+          "issuer": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+          "issuerId": "./js/main.js",
+          "issuerName": "./js/main.js",
+          "issuerPath": [
+            {
+              "id": "./js/main.js",
+              "identifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+              "name": "./js/main.js",
+              "profile": {
+                "factory": 66,
+                "building": 2501
+              }
+            }
+          ],
+          "profile": {
+            "factory": 17,
+            "building": 98,
+            "dependencies": 1
+          },
+          "failed": false,
+          "errors": 0,
+          "warnings": 0,
+          "assets": [],
+          "reasons": [
+            {
+              "moduleId": "./js/main.js",
+              "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+              "module": "./js/main.js",
+              "moduleName": "./js/main.js",
+              "type": "harmony side effect evaluation",
+              "userRequest": "./templates/game-1.js",
+              "loc": "5:0-50"
+            },
+            {
+              "moduleId": "./js/main.js",
+              "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+              "module": "./js/main.js",
+              "moduleName": "./js/main.js",
+              "type": "harmony import specifier",
+              "userRequest": "./templates/game-1.js",
+              "loc": "50:18-31"
+            }
+          ],
+          "providedExports": [
+            "default"
+          ],
+          "optimizationBailout": [],
+          "depth": 1,
+          "source": "import { createContentFromString } from '../utils.js';\n\nconst template = `<header class=\"header\">\n<div class=\"header__back\">\n  <button class=\"back\">\n    <img src=\"img/arrow_left.svg\" width=\"45\" height=\"45\" alt=\"Back\">\n    <img src=\"img/logo_small.svg\" width=\"101\" height=\"44\">\n  </button>\n</div>\n<h1 class=\"game__timer\">NN</h1>\n<div class=\"game__lives\">\n  <img src=\"img/heart__empty.svg\" class=\"game__heart\" alt=\"Life\" width=\"32\" height=\"32\">\n  <img src=\"img/heart__full.svg\" class=\"game__heart\" alt=\"Life\" width=\"32\" height=\"32\">\n  <img src=\"img/heart__full.svg\" class=\"game__heart\" alt=\"Life\" width=\"32\" height=\"32\">\n</div>\n</header>\n<div class=\"game\">\n<p class=\"game__task\">Угадайте для каждого изображения фото или рисунок?</p>\n<form class=\"game__content\">\n  <div class=\"game__option\">\n    <img src=\"http://placehold.it/468x458\" alt=\"Option 1\" width=\"468\" height=\"458\">\n    <label class=\"game__answer game__answer--photo\">\n      <input name=\"question1\" type=\"radio\" value=\"photo\">\n      <span>Фото</span>\n    </label>\n    <label class=\"game__answer game__answer--paint\">\n      <input name=\"question1\" type=\"radio\" value=\"paint\">\n      <span>Рисунок</span>\n    </label>\n  </div>\n  <div class=\"game__option\">\n    <img src=\"http://placehold.it/468x458\" alt=\"Option 2\" width=\"468\" height=\"458\">\n    <label class=\"game__answer  game__answer--photo\">\n      <input name=\"question2\" type=\"radio\" value=\"photo\">\n      <span>Фото</span>\n    </label>\n    <label class=\"game__answer  game__answer--paint\">\n      <input name=\"question2\" type=\"radio\" value=\"paint\">\n      <span>Рисунок</span>\n    </label>\n  </div>\n</form>\n<div class=\"stats\">\n  <ul class=\"stats\">\n    <li class=\"stats__result stats__result--wrong\"></li>\n    <li class=\"stats__result stats__result--slow\"></li>\n    <li class=\"stats__result stats__result--fast\"></li>\n    <li class=\"stats__result stats__result--correct\"></li>\n    <li class=\"stats__result stats__result--unknown\"></li>\n    <li class=\"stats__result stats__result--unknown\"></li>\n    <li class=\"stats__result stats__result--unknown\"></li>\n    <li class=\"stats__result stats__result--unknown\"></li>\n    <li class=\"stats__result stats__result--unknown\"></li>\n    <li class=\"stats__result stats__result--unknown\"></li>\n  </ul>\n</div>\n</div>`;\n\nconst page = createContentFromString(template);\n\nexport default (() => {\n  const clone = page.cloneNode(true);\n  return clone;\n});"
+        },
+        {
+          "id": "./js/templates/game-2.js",
+          "identifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\templates\\game-2.js",
+          "name": "./js/templates/game-2.js",
+          "index": 6,
+          "index2": 5,
+          "size": 1978,
+          "cacheable": true,
+          "built": true,
+          "optional": false,
+          "prefetched": false,
+          "chunks": [
+            "main"
+          ],
+          "issuer": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+          "issuerId": "./js/main.js",
+          "issuerName": "./js/main.js",
+          "issuerPath": [
+            {
+              "id": "./js/main.js",
+              "identifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+              "name": "./js/main.js",
+              "profile": {
+                "factory": 66,
+                "building": 2501
+              }
+            }
+          ],
+          "profile": {
+            "factory": 17,
+            "building": 98,
+            "dependencies": 1
+          },
+          "failed": false,
+          "errors": 0,
+          "warnings": 0,
+          "assets": [],
+          "reasons": [
+            {
+              "moduleId": "./js/main.js",
+              "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+              "module": "./js/main.js",
+              "moduleName": "./js/main.js",
+              "type": "harmony side effect evaluation",
+              "userRequest": "./templates/game-2.js",
+              "loc": "6:0-50"
+            },
+            {
+              "moduleId": "./js/main.js",
+              "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+              "module": "./js/main.js",
+              "moduleName": "./js/main.js",
+              "type": "harmony import specifier",
+              "userRequest": "./templates/game-2.js",
+              "loc": "76:24-37"
+            },
+            {
+              "moduleId": "./js/main.js",
+              "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+              "module": "./js/main.js",
+              "moduleName": "./js/main.js",
+              "type": "harmony import specifier",
+              "userRequest": "./templates/game-2.js",
+              "loc": "89:24-37"
+            }
+          ],
+          "providedExports": [
+            "default"
+          ],
+          "optimizationBailout": [],
+          "depth": 1,
+          "source": "import { createContentFromString } from '../utils.js';\n\nconst template = `<header class=\"header\">\n<div class=\"header__back\">\n  <button class=\"back\">\n    <img src=\"img/arrow_left.svg\" width=\"45\" height=\"45\" alt=\"Back\">\n    <img src=\"img/logo_small.svg\" width=\"101\" height=\"44\">\n  </button>\n</div>\n<h1 class=\"game__timer\">NN</h1>\n<div class=\"game__lives\">\n  <img src=\"img/heart__empty.svg\" class=\"game__heart\" alt=\"Life\" width=\"32\" height=\"32\">\n  <img src=\"img/heart__full.svg\" class=\"game__heart\" alt=\"Life\" width=\"32\" height=\"32\">\n  <img src=\"img/heart__full.svg\" class=\"game__heart\" alt=\"Life\" width=\"32\" height=\"32\">\n</div>\n</header>\n<div class=\"game\">\n<p class=\"game__task\">Угадай, фото или рисунок?</p>\n<form class=\"game__content  game__content--wide\">\n  <div class=\"game__option\">\n    <img src=\"http://placehold.it/705x455\" alt=\"Option 1\" width=\"705\" height=\"455\">\n    <label class=\"game__answer  game__answer--photo\">\n      <input name=\"question1\" type=\"radio\" value=\"photo\">\n      <span>Фото</span>\n    </label>\n    <label class=\"game__answer  game__answer--wide  game__answer--paint\">\n      <input name=\"question1\" type=\"radio\" value=\"paint\">\n      <span>Рисунок</span>\n    </label>\n  </div>\n</form>\n<div class=\"stats\">\n  <ul class=\"stats\">\n    <li class=\"stats__result stats__result--wrong\"></li>\n    <li class=\"stats__result stats__result--slow\"></li>\n    <li class=\"stats__result stats__result--fast\"></li>\n    <li class=\"stats__result stats__result--correct\"></li>\n    <li class=\"stats__result stats__result--wrong\"></li>\n    <li class=\"stats__result stats__result--unknown\"></li>\n    <li class=\"stats__result stats__result--slow\"></li>\n    <li class=\"stats__result stats__result--unknown\"></li>\n    <li class=\"stats__result stats__result--fast\"></li>\n    <li class=\"stats__result stats__result--unknown\"></li>\n  </ul>\n</div>\n</div>`;\n\nconst page = createContentFromString(template);\n\nexport default (() => {\n  const clone = page.cloneNode(true);\n  return clone;\n});"
+        },
+        {
+          "id": "./js/templates/game-3.js",
+          "identifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\templates\\game-3.js",
+          "name": "./js/templates/game-3.js",
+          "index": 7,
+          "index2": 6,
+          "size": 1935,
+          "cacheable": true,
+          "built": true,
+          "optional": false,
+          "prefetched": false,
+          "chunks": [
+            "main"
+          ],
+          "issuer": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+          "issuerId": "./js/main.js",
+          "issuerName": "./js/main.js",
+          "issuerPath": [
+            {
+              "id": "./js/main.js",
+              "identifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+              "name": "./js/main.js",
+              "profile": {
+                "factory": 66,
+                "building": 2501
+              }
+            }
+          ],
+          "profile": {
+            "factory": 17,
+            "building": 98,
+            "dependencies": 1
+          },
+          "failed": false,
+          "errors": 0,
+          "warnings": 0,
+          "assets": [],
+          "reasons": [
+            {
+              "moduleId": "./js/main.js",
+              "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+              "module": "./js/main.js",
+              "moduleName": "./js/main.js",
+              "type": "harmony side effect evaluation",
+              "userRequest": "./templates/game-3.js",
+              "loc": "7:0-52"
+            },
+            {
+              "moduleId": "./js/main.js",
+              "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+              "module": "./js/main.js",
+              "moduleName": "./js/main.js",
+              "type": "harmony import specifier",
+              "userRequest": "./templates/game-3.js",
+              "loc": "107:22-37"
+            }
+          ],
+          "providedExports": [
+            "default"
+          ],
+          "optimizationBailout": [],
+          "depth": 1,
+          "source": "import { createContentFromString } from '../utils.js';\n\nconst template = `<header class=\"header\">\n<div class=\"header__back\">\n  <button class=\"back\">\n    <img src=\"img/arrow_left.svg\" width=\"45\" height=\"45\" alt=\"Back\">\n    <img src=\"img/logo_small.svg\" width=\"101\" height=\"44\">\n  </button>\n</div>\n<h1 class=\"game__timer\">NN</h1>\n<div class=\"game__lives\">\n  <img src=\"img/heart__empty.svg\" class=\"game__heart\" alt=\"Life\" width=\"32\" height=\"32\">\n  <img src=\"img/heart__full.svg\" class=\"game__heart\" alt=\"Life\" width=\"32\" height=\"32\">\n  <img src=\"img/heart__full.svg\" class=\"game__heart\" alt=\"Life\" width=\"32\" height=\"32\">\n</div>\n</header>\n<div class=\"game\">\n<p class=\"game__task\">Найдите рисунок среди изображений</p>\n<form class=\"game__content  game__content--triple\">\n  <div class=\"game__option\">\n    <img src=\"http://placehold.it/304x455\" alt=\"Option 1\" width=\"304\" height=\"455\">\n  </div>\n  <div class=\"game__option  game__option--selected\">\n    <img src=\"http://placehold.it/304x455\" alt=\"Option 1\" width=\"304\" height=\"455\">\n  </div>\n  <div class=\"game__option\">\n    <img src=\"http://placehold.it/304x455\" alt=\"Option 1\" width=\"304\" height=\"455\">\n  </div>\n</form>\n<div class=\"stats\">\n  <ul class=\"stats\">\n    <li class=\"stats__result stats__result--wrong\"></li>\n    <li class=\"stats__result stats__result--slow\"></li>\n    <li class=\"stats__result stats__result--fast\"></li>\n    <li class=\"stats__result stats__result--correct\"></li>\n    <li class=\"stats__result stats__result--wrong\"></li>\n    <li class=\"stats__result stats__result--unknown\"></li>\n    <li class=\"stats__result stats__result--slow\"></li>\n    <li class=\"stats__result stats__result--unknown\"></li>\n    <li class=\"stats__result stats__result--fast\"></li>\n    <li class=\"stats__result stats__result--unknown\"></li>\n  </ul>\n</div>\n</div>`;\n\nconst page = createContentFromString(template);\n\nexport default (() => {\n  const clone = page.cloneNode(true);\n  return clone;\n});"
+        },
+        {
+          "id": "./js/templates/greeting.js",
+          "identifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\templates\\greeting.js",
+          "name": "./js/templates/greeting.js",
+          "index": 3,
+          "index2": 2,
+          "size": 883,
+          "cacheable": true,
+          "built": true,
+          "optional": false,
+          "prefetched": false,
+          "chunks": [
+            "main"
+          ],
+          "issuer": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+          "issuerId": "./js/main.js",
+          "issuerName": "./js/main.js",
+          "issuerPath": [
+            {
+              "id": "./js/main.js",
+              "identifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+              "name": "./js/main.js",
+              "profile": {
+                "factory": 66,
+                "building": 2501
+              }
+            }
+          ],
+          "profile": {
+            "factory": 17,
+            "building": 98,
+            "dependencies": 1
+          },
+          "failed": false,
+          "errors": 0,
+          "warnings": 0,
+          "assets": [],
+          "reasons": [
+            {
+              "moduleId": "./js/main.js",
+              "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+              "module": "./js/main.js",
+              "moduleName": "./js/main.js",
+              "type": "harmony side effect evaluation",
+              "userRequest": "./templates/greeting.js",
+              "loc": "3:0-53"
+            },
+            {
+              "moduleId": "./js/main.js",
+              "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+              "module": "./js/main.js",
+              "moduleName": "./js/main.js",
+              "type": "harmony import specifier",
+              "userRequest": "./templates/greeting.js",
+              "loc": "23:18-32"
+            }
+          ],
+          "providedExports": [
+            "default"
+          ],
+          "optimizationBailout": [],
+          "depth": 1,
+          "source": "import { createContentFromString } from '../utils.js';\n\nconst template = `<div class=\"greeting central--blur\">\n<div class=\"greeting__logo\"><img src=\"img/logo_big.png\" width=\"201\" height=\"89\" alt=\"Pixel Hunter\"></div>\n<h1 class=\"greeting__asterisk\">*</h1>\n<div class=\"greeting__challenge\">\n  <h3>Лучшие художники-фотореалисты бросают&nbsp;тебе&nbsp;вызов!</h3>\n  <p>Правила игры просты.<br>\n    Нужно отличить рисунок&nbsp;от фотографии и сделать выбор.<br>\n    Задача кажется тривиальной, но не думай, что все так просто.<br>\n    Фотореализм обманчив и коварен.<br>\n    Помни, главное — смотреть очень внимательно.</p>\n</div>\n<div class=\"greeting__continue\"><span><img src=\"img/arrow_right.svg\" width=\"64\" height=\"64\" alt=\"Next\"></span></div>\n</div>`;\n\nconst page = createContentFromString(template);\n\nexport default (() => {\n  const clone = page.cloneNode(true);\n  return clone;\n});"
+        },
+        {
+          "id": "./js/templates/intro.js",
+          "identifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\templates\\intro.js",
+          "name": "./js/templates/intro.js",
+          "index": 2,
+          "index2": 1,
+          "size": 407,
+          "cacheable": true,
+          "built": true,
+          "optional": false,
+          "prefetched": false,
+          "chunks": [
+            "main"
+          ],
+          "issuer": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+          "issuerId": "./js/main.js",
+          "issuerName": "./js/main.js",
+          "issuerPath": [
+            {
+              "id": "./js/main.js",
+              "identifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+              "name": "./js/main.js",
+              "profile": {
+                "factory": 66,
+                "building": 2501
+              }
+            }
+          ],
+          "profile": {
+            "factory": 17,
+            "building": 98,
+            "dependencies": 1
+          },
+          "failed": false,
+          "errors": 0,
+          "warnings": 0,
+          "assets": [],
+          "reasons": [
+            {
+              "moduleId": "./js/main.js",
+              "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+              "module": "./js/main.js",
+              "moduleName": "./js/main.js",
+              "type": "harmony side effect evaluation",
+              "userRequest": "./templates/intro.js",
+              "loc": "2:0-47"
+            },
+            {
+              "moduleId": "./js/main.js",
+              "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+              "module": "./js/main.js",
+              "moduleName": "./js/main.js",
+              "type": "harmony import specifier",
+              "userRequest": "./templates/intro.js",
+              "loc": "14:18-29"
+            },
+            {
+              "moduleId": "./js/main.js",
+              "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+              "module": "./js/main.js",
+              "moduleName": "./js/main.js",
+              "type": "harmony import specifier",
+              "userRequest": "./templates/intro.js",
+              "loc": "139:14-25"
+            }
+          ],
+          "providedExports": [
+            "default"
+          ],
+          "optimizationBailout": [],
+          "depth": 1,
+          "source": "import { createContentFromString } from '../utils.js';\n\nconst template = `<div id=\"intro\" class=\"intro\">\n<h1 class=\"intro__asterisk\">*</h1>\n<p class=\"intro__motto\"><sup>*</sup> Это не фото. Это рисунок маслом нидерландского художника-фотореалиста Tjalf Sparnaay.</p>\n</div>`;\n\nconst page = createContentFromString(template);\n\nexport default (() => {\n  const clone = page.cloneNode(true);\n  return clone;\n});"
+        },
+        {
+          "id": "./js/templates/rules.js",
+          "identifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\templates\\rules.js",
+          "name": "./js/templates/rules.js",
+          "index": 4,
+          "index2": 3,
+          "size": 1083,
+          "cacheable": true,
+          "built": true,
+          "optional": false,
+          "prefetched": false,
+          "chunks": [
+            "main"
+          ],
+          "issuer": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+          "issuerId": "./js/main.js",
+          "issuerName": "./js/main.js",
+          "issuerPath": [
+            {
+              "id": "./js/main.js",
+              "identifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+              "name": "./js/main.js",
+              "profile": {
+                "factory": 66,
+                "building": 2501
+              }
+            }
+          ],
+          "profile": {
+            "factory": 17,
+            "building": 98,
+            "dependencies": 1
+          },
+          "failed": false,
+          "errors": 0,
+          "warnings": 0,
+          "assets": [],
+          "reasons": [
+            {
+              "moduleId": "./js/main.js",
+              "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+              "module": "./js/main.js",
+              "moduleName": "./js/main.js",
+              "type": "harmony side effect evaluation",
+              "userRequest": "./templates/rules.js",
+              "loc": "4:0-47"
+            },
+            {
+              "moduleId": "./js/main.js",
+              "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+              "module": "./js/main.js",
+              "moduleName": "./js/main.js",
+              "type": "harmony import specifier",
+              "userRequest": "./templates/rules.js",
+              "loc": "32:18-29"
+            }
+          ],
+          "providedExports": [
+            "default"
+          ],
+          "optimizationBailout": [],
+          "depth": 1,
+          "source": "import { createContentFromString } from '../utils.js';\n\nconst template = `<div>\n<header class=\"header\">\n  <div class=\"header__back\">\n    <button class=\"back\">\n      <img src=\"img/arrow_left.svg\" width=\"45\" height=\"45\" alt=\"Back\">\n      <img src=\"img/logo_small.svg\" width=\"101\" height=\"44\">\n    </button>\n  </div>\n</header>\n<div class=\"rules\">\n<h1 class=\"rules__title\">Правила</h1>\n<p class=\"rules__description\">Угадай 10 раз для каждого изображения фото <img\n  src=\"img/photo_icon.png\" width=\"16\" height=\"16\"> или рисунок <img\n  src=\"img/paint_icon.png\" width=\"16\" height=\"16\" alt=\"\">.<br>\n  Фотографиями или рисунками могут быть оба изображения.<br>\n  На каждую попытку отводится 30 секунд.<br>\n  Ошибиться можно не более 3 раз.<br>\n  <br>\n  Готовы?\n</p>\n<form class=\"rules__form\">\n  <input class=\"rules__input\" type=\"text\" placeholder=\"Ваше Имя\">\n  <button class=\"rules__button  continue\" type=\"submit\" disabled>Go!</button>\n</form>\n</div>\n</div>`;\n\nconst page = createContentFromString(template);\n\nexport default (() => {\n  const clone = page.cloneNode(true);\n  return clone;\n});"
+        },
+        {
+          "id": "./js/templates/stats.js",
+          "identifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\templates\\stats.js",
+          "name": "./js/templates/stats.js",
+          "index": 8,
+          "index2": 7,
+          "size": 4305,
+          "cacheable": true,
+          "built": true,
+          "optional": false,
+          "prefetched": false,
+          "chunks": [
+            "main"
+          ],
+          "issuer": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+          "issuerId": "./js/main.js",
+          "issuerName": "./js/main.js",
+          "issuerPath": [
+            {
+              "id": "./js/main.js",
+              "identifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+              "name": "./js/main.js",
+              "profile": {
+                "factory": 66,
+                "building": 2501
+              }
+            }
+          ],
+          "profile": {
+            "factory": 17,
+            "building": 98,
+            "dependencies": 1
+          },
+          "failed": false,
+          "errors": 0,
+          "warnings": 0,
+          "assets": [],
+          "reasons": [
+            {
+              "moduleId": "./js/main.js",
+              "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+              "module": "./js/main.js",
+              "moduleName": "./js/main.js",
+              "type": "harmony side effect evaluation",
+              "userRequest": "./templates/stats.js",
+              "loc": "8:0-47"
+            },
+            {
+              "moduleId": "./js/main.js",
+              "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+              "module": "./js/main.js",
+              "moduleName": "./js/main.js",
+              "type": "harmony import specifier",
+              "userRequest": "./templates/stats.js",
+              "loc": "121:20-31"
+            }
+          ],
+          "providedExports": [
+            "default"
+          ],
+          "optimizationBailout": [],
+          "depth": 1,
+          "source": "import { createContentFromString } from '../utils.js';\n\nconst template = `<header class=\"header\">\n<div class=\"header__back\">\n  <button class=\"back\">\n    <img src=\"img/arrow_left.svg\" width=\"45\" height=\"45\" alt=\"Back\">\n    <img src=\"img/logo_small.svg\" width=\"101\" height=\"44\">\n  </button>\n</div>\n</header>\n<div class=\"result\">\n<h1>Победа!</h1>\n<table class=\"result__table\">\n  <tr>\n    <td class=\"result__number\">1.</td>\n    <td colspan=\"2\">\n      <ul class=\"stats\">\n        <li class=\"stats__result stats__result--wrong\"></li>\n        <li class=\"stats__result stats__result--slow\"></li>\n        <li class=\"stats__result stats__result--fast\"></li>\n        <li class=\"stats__result stats__result--correct\"></li>\n        <li class=\"stats__result stats__result--wrong\"></li>\n        <li class=\"stats__result stats__result--unknown\"></li>\n        <li class=\"stats__result stats__result--slow\"></li>\n        <li class=\"stats__result stats__result--unknown\"></li>\n        <li class=\"stats__result stats__result--fast\"></li>\n        <li class=\"stats__result stats__result--unknown\"></li>\n      </ul>\n    </td>\n    <td class=\"result__points\">×&nbsp;100</td>\n    <td class=\"result__total\">900</td>\n  </tr>\n  <tr>\n    <td></td>\n    <td class=\"result__extra\">Бонус за скорость:</td>\n    <td class=\"result__extra\">1&nbsp;<span class=\"stats__result stats__result--fast\"></span></td>\n    <td class=\"result__points\">×&nbsp;50</td>\n    <td class=\"result__total\">50</td>\n  </tr>\n  <tr>\n    <td></td>\n    <td class=\"result__extra\">Бонус за жизни:</td>\n    <td class=\"result__extra\">2&nbsp;<span class=\"stats__result stats__result--alive\"></span></td>\n    <td class=\"result__points\">×&nbsp;50</td>\n    <td class=\"result__total\">100</td>\n  </tr>\n  <tr>\n    <td></td>\n    <td class=\"result__extra\">Штраф за медлительность:</td>\n    <td class=\"result__extra\">2&nbsp;<span class=\"stats__result stats__result--slow\"></span></td>\n    <td class=\"result__points\">×&nbsp;50</td>\n    <td class=\"result__total\">-100</td>\n  </tr>\n  <tr>\n    <td colspan=\"5\" class=\"result__total  result__total--final\">950</td>\n  </tr>\n</table>\n<table class=\"result__table\">\n  <tr>\n    <td class=\"result__number\">2.</td>\n    <td>\n      <ul class=\"stats\">\n        <li class=\"stats__result stats__result--wrong\"></li>\n        <li class=\"stats__result stats__result--slow\"></li>\n        <li class=\"stats__result stats__result--fast\"></li>\n        <li class=\"stats__result stats__result--correct\"></li>\n        <li class=\"stats__result stats__result--wrong\"></li>\n        <li class=\"stats__result stats__result--unknown\"></li>\n        <li class=\"stats__result stats__result--slow\"></li>\n        <li class=\"stats__result stats__result--wrong\"></li>\n        <li class=\"stats__result stats__result--fast\"></li>\n        <li class=\"stats__result stats__result--wrong\"></li>\n      </ul>\n    </td>\n    <td class=\"result__total\"></td>\n    <td class=\"result__total  result__total--final\">fail</td>\n  </tr>\n</table>\n<table class=\"result__table\">\n  <tr>\n    <td class=\"result__number\">3.</td>\n    <td colspan=\"2\">\n      <ul class=\"stats\">\n        <li class=\"stats__result stats__result--wrong\"></li>\n        <li class=\"stats__result stats__result--slow\"></li>\n        <li class=\"stats__result stats__result--fast\"></li>\n        <li class=\"stats__result stats__result--correct\"></li>\n        <li class=\"stats__result stats__result--wrong\"></li>\n        <li class=\"stats__result stats__result--unknown\"></li>\n        <li class=\"stats__result stats__result--slow\"></li>\n        <li class=\"stats__result stats__result--unknown\"></li>\n        <li class=\"stats__result stats__result--fast\"></li>\n        <li class=\"stats__result stats__result--unknown\"></li>\n      </ul>\n    </td>\n    <td class=\"result__points\">×&nbsp;100</td>\n    <td class=\"result__total\">900</td>\n  </tr>\n  <tr>\n    <td></td>\n    <td class=\"result__extra\">Бонус за жизни:</td>\n    <td class=\"result__extra\">2&nbsp;<span class=\"stats__result stats__result--alive\"></span></td>\n    <td class=\"result__points\">×&nbsp;50</td>\n    <td class=\"result__total\">100</td>\n  </tr>\n  <tr>\n    <td colspan=\"5\" class=\"result__total  result__total--final\">950</td>\n  </tr>\n</table>\n</div>`;\n\nconst page = createContentFromString(template);\n\nexport default (() => {\n  const clone = page.cloneNode(true);\n  return clone;\n});"
+        },
+        {
+          "id": "./js/utils.js",
+          "identifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\utils.js",
+          "name": "./js/utils.js",
+          "index": 1,
+          "index2": 0,
+          "size": 372,
+          "cacheable": true,
+          "built": true,
+          "optional": false,
+          "prefetched": false,
+          "chunks": [
+            "main"
+          ],
+          "issuer": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+          "issuerId": "./js/main.js",
+          "issuerName": "./js/main.js",
+          "issuerPath": [
+            {
+              "id": "./js/main.js",
+              "identifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+              "name": "./js/main.js",
+              "profile": {
+                "factory": 66,
+                "building": 2501
+              }
+            }
+          ],
+          "profile": {
+            "factory": 17,
+            "building": 98,
+            "dependencies": 1
+          },
+          "failed": false,
+          "errors": 0,
+          "warnings": 0,
+          "assets": [],
+          "reasons": [
+            {
+              "moduleId": "./js/main.js",
+              "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+              "module": "./js/main.js",
+              "moduleName": "./js/main.js",
+              "type": "harmony import specifier",
+              "userRequest": "./utils.js",
+              "loc": "14:4-17"
+            },
+            {
+              "moduleId": "./js/templates/intro.js",
+              "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\templates\\intro.js",
+              "module": "./js/templates/intro.js",
+              "moduleName": "./js/templates/intro.js",
+              "type": "harmony side effect evaluation",
+              "userRequest": "../utils.js",
+              "loc": "1:0-54"
+            },
+            {
+              "moduleId": "./js/main.js",
+              "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+              "module": "./js/main.js",
+              "moduleName": "./js/main.js",
+              "type": "harmony import specifier",
+              "userRequest": "./utils.js",
+              "loc": "23:4-17"
+            },
+            {
+              "moduleId": "./js/main.js",
+              "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+              "module": "./js/main.js",
+              "moduleName": "./js/main.js",
+              "type": "harmony import specifier",
+              "userRequest": "./utils.js",
+              "loc": "32:4-17"
+            },
+            {
+              "moduleId": "./js/main.js",
+              "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+              "module": "./js/main.js",
+              "moduleName": "./js/main.js",
+              "type": "harmony import specifier",
+              "userRequest": "./utils.js",
+              "loc": "50:4-17"
+            },
+            {
+              "moduleId": "./js/main.js",
+              "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+              "module": "./js/main.js",
+              "moduleName": "./js/main.js",
+              "type": "harmony import specifier",
+              "userRequest": "./utils.js",
+              "loc": "76:10-23"
+            },
+            {
+              "moduleId": "./js/main.js",
+              "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+              "module": "./js/main.js",
+              "moduleName": "./js/main.js",
+              "type": "harmony import specifier",
+              "userRequest": "./utils.js",
+              "loc": "89:10-23"
+            },
+            {
+              "moduleId": "./js/main.js",
+              "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+              "module": "./js/main.js",
+              "moduleName": "./js/main.js",
+              "type": "harmony import specifier",
+              "userRequest": "./utils.js",
+              "loc": "107:8-21"
+            },
+            {
+              "moduleId": "./js/main.js",
+              "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+              "module": "./js/main.js",
+              "moduleName": "./js/main.js",
+              "type": "harmony import specifier",
+              "userRequest": "./utils.js",
+              "loc": "121:6-19"
+            },
+            {
+              "moduleId": "./js/main.js",
+              "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+              "module": "./js/main.js",
+              "moduleName": "./js/main.js",
+              "type": "harmony import specifier",
+              "userRequest": "./utils.js",
+              "loc": "139:0-13"
+            },
+            {
+              "moduleId": "./js/templates/greeting.js",
+              "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\templates\\greeting.js",
+              "module": "./js/templates/greeting.js",
+              "moduleName": "./js/templates/greeting.js",
+              "type": "harmony side effect evaluation",
+              "userRequest": "../utils.js",
+              "loc": "1:0-54"
+            },
+            {
+              "moduleId": "./js/templates/greeting.js",
+              "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\templates\\greeting.js",
+              "module": "./js/templates/greeting.js",
+              "moduleName": "./js/templates/greeting.js",
+              "type": "harmony import specifier",
+              "userRequest": "../utils.js",
+              "loc": "17:13-36"
+            },
+            {
+              "moduleId": "./js/main.js",
+              "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+              "module": "./js/main.js",
+              "moduleName": "./js/main.js",
+              "type": "harmony side effect evaluation",
+              "userRequest": "./utils.js",
+              "loc": "1:0-43"
+            },
+            {
+              "moduleId": "./js/templates/intro.js",
+              "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\templates\\intro.js",
+              "module": "./js/templates/intro.js",
+              "moduleName": "./js/templates/intro.js",
+              "type": "harmony import specifier",
+              "userRequest": "../utils.js",
+              "loc": "8:13-36"
+            },
+            {
+              "moduleId": "./js/templates/game-2.js",
+              "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\templates\\game-2.js",
+              "module": "./js/templates/game-2.js",
+              "moduleName": "./js/templates/game-2.js",
+              "type": "harmony side effect evaluation",
+              "userRequest": "../utils.js",
+              "loc": "1:0-54"
+            },
+            {
+              "moduleId": "./js/templates/game-2.js",
+              "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\templates\\game-2.js",
+              "module": "./js/templates/game-2.js",
+              "moduleName": "./js/templates/game-2.js",
+              "type": "harmony import specifier",
+              "userRequest": "../utils.js",
+              "loc": "48:13-36"
+            },
+            {
+              "moduleId": "./js/templates/game-1.js",
+              "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\templates\\game-1.js",
+              "module": "./js/templates/game-1.js",
+              "moduleName": "./js/templates/game-1.js",
+              "type": "harmony side effect evaluation",
+              "userRequest": "../utils.js",
+              "loc": "1:0-54"
+            },
+            {
+              "moduleId": "./js/templates/game-1.js",
+              "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\templates\\game-1.js",
+              "module": "./js/templates/game-1.js",
+              "moduleName": "./js/templates/game-1.js",
+              "type": "harmony import specifier",
+              "userRequest": "../utils.js",
+              "loc": "59:13-36"
+            },
+            {
+              "moduleId": "./js/templates/game-3.js",
+              "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\templates\\game-3.js",
+              "module": "./js/templates/game-3.js",
+              "moduleName": "./js/templates/game-3.js",
+              "type": "harmony side effect evaluation",
+              "userRequest": "../utils.js",
+              "loc": "1:0-54"
+            },
+            {
+              "moduleId": "./js/templates/game-3.js",
+              "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\templates\\game-3.js",
+              "module": "./js/templates/game-3.js",
+              "moduleName": "./js/templates/game-3.js",
+              "type": "harmony import specifier",
+              "userRequest": "../utils.js",
+              "loc": "46:13-36"
+            },
+            {
+              "moduleId": "./js/templates/rules.js",
+              "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\templates\\rules.js",
+              "module": "./js/templates/rules.js",
+              "moduleName": "./js/templates/rules.js",
+              "type": "harmony side effect evaluation",
+              "userRequest": "../utils.js",
+              "loc": "1:0-54"
+            },
+            {
+              "moduleId": "./js/templates/rules.js",
+              "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\templates\\rules.js",
+              "module": "./js/templates/rules.js",
+              "moduleName": "./js/templates/rules.js",
+              "type": "harmony import specifier",
+              "userRequest": "../utils.js",
+              "loc": "30:13-36"
+            },
+            {
+              "moduleId": "./js/templates/stats.js",
+              "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\templates\\stats.js",
+              "module": "./js/templates/stats.js",
+              "moduleName": "./js/templates/stats.js",
+              "type": "harmony side effect evaluation",
+              "userRequest": "../utils.js",
+              "loc": "1:0-54"
+            },
+            {
+              "moduleId": "./js/templates/stats.js",
+              "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\templates\\stats.js",
+              "module": "./js/templates/stats.js",
+              "moduleName": "./js/templates/stats.js",
+              "type": "harmony import specifier",
+              "userRequest": "../utils.js",
+              "loc": "112:13-36"
+            }
+          ],
+          "providedExports": [
+            "createContentFromString",
+            "changeDisplay"
+          ],
+          "optimizationBailout": [],
+          "depth": 1,
+          "source": "const createContentFromString = stringTemplate => {\n  const element = document.createElement(`template`);\n  element.innerHTML = stringTemplate;\n  return element.content;\n};\n\nconst changeDisplay = content => {\n  const display = document.querySelector(`#main`);\n  display.innerHTML = ``;\n  display.appendChild(content);\n};\n\nexport { createContentFromString, changeDisplay };"
+        }
+      ],
+      "filteredModules": 0,
+      "origins": [
+        {
+          "module": "",
+          "moduleIdentifier": "",
+          "moduleName": "",
+          "loc": "main",
+          "request": "./js/main.js",
+          "reasons": []
+        }
+      ]
+    }
+  ],
+  "modules": [
+    {
+      "id": "./js/main.js",
+      "identifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+      "name": "./js/main.js",
+      "index": 0,
+      "index2": 8,
+      "size": 3281,
+      "cacheable": true,
+      "built": true,
+      "optional": false,
+      "prefetched": false,
+      "chunks": [
+        "main"
+      ],
+      "issuer": null,
+      "issuerId": null,
+      "issuerName": null,
+      "issuerPath": null,
+      "profile": {
+        "factory": 66,
+        "building": 2501
+      },
+      "failed": false,
+      "errors": 0,
+      "warnings": 0,
+      "assets": [],
+      "reasons": [
+        {
+          "moduleId": null,
+          "moduleIdentifier": null,
+          "module": null,
+          "moduleName": null,
+          "type": "single entry",
+          "userRequest": "./js/main.js",
+          "loc": "main"
+        }
+      ],
+      "providedExports": [],
+      "optimizationBailout": [],
+      "depth": 0,
+      "source": "import { changeDisplay } from './utils.js';\nimport renderIntro from './templates/intro.js';\nimport renderGreeting from './templates/greeting.js';\nimport renderRules from './templates/rules.js';\nimport renderGameOne from './templates/game-1.js';\nimport renderGameTwo from './templates/game-2.js';\nimport renderGameThree from './templates/game-3.js';\nimport renderStats from './templates/stats.js';\n\nfunction backBtnListener() {\n  const backBtn = document.querySelector(`.back`);\n\n  backBtn.addEventListener(`click`, function () {\n    changeDisplay(renderIntro());\n    introPreset();\n  });\n}\n\nfunction introPreset() {\n  const introBtn = document.querySelector(`.intro__asterisk`);\n\n  introBtn.addEventListener(`click`, function () {\n    changeDisplay(renderGreeting());\n    greetingPreset();\n  });\n}\n\nfunction greetingPreset() {\n  const continueBtn = document.querySelector(`.greeting__continue`);\n\n  continueBtn.addEventListener(`click`, function () {\n    changeDisplay(renderRules());\n    rulesPreset();\n  });\n}\n\nfunction rulesPreset() {\n  const form = document.querySelector(`.rules__form`);\n  const nameInput = form.querySelector(`.rules__input`);\n  const goBtn = form.querySelector(`.rules__button`);\n\n  form.reset();\n\n  nameInput.addEventListener(`input`, function () {\n    goBtn.disabled = nameInput.value === `` ? true : false;\n  });\n\n  form.addEventListener(`submit`, function (evt) {\n    evt.preventDefault();\n    changeDisplay(renderGameOne());\n    gameOnePreset();\n  });\n\n  backBtnListener();\n}\n\nfunction gameOnePreset() {\n  const form = document.querySelector(`.game__content`);\n  const inputs = Array.from(form.querySelectorAll(`input[type='radio']`));\n  const q1Inputs = Array.from(form.querySelectorAll(`input[name='question1']`));\n  const q2Inputs = Array.from(form.querySelectorAll(`input[name='question2']`));\n\n  let answer1 = false;\n  let answer2 = false;\n\n  inputs.map(input => {\n    input.checked = false;\n  });\n\n  q1Inputs.forEach(el => {\n    el.addEventListener(`change`, function q1Handler() {\n      if (el.checked) {\n        answer1 = true;\n\n        if (answer2) {\n          changeDisplay(renderGameTwo());\n          gameTwoPreset();\n        }\n      }\n    });\n  });\n\n  q2Inputs.forEach(el => {\n    el.addEventListener(`change`, function q2Handler() {\n      if (el.checked) {\n        answer2 = true;\n\n        if (answer1) {\n          changeDisplay(renderGameTwo());\n          gameTwoPreset();\n        }\n      }\n    });\n  });\n\n  backBtnListener();\n}\n\nfunction gameTwoPreset() {\n  const inputs = document.querySelectorAll(`input[type='radio']`);\n\n  inputs.forEach(input => {\n    input.checked = false;\n\n    input.addEventListener(`change`, function () {\n      if (input.checked) {\n        changeDisplay(renderGameThree());\n        gameThreePreset();\n      }\n    });\n  });\n\n  backBtnListener();\n}\n\nfunction gameThreePreset() {\n  const options = document.querySelectorAll(`.game__option`);\n\n  options.forEach(option => {\n    option.addEventListener(`click`, function handler() {\n      changeDisplay(renderStats());\n      backBtnListener();\n    });\n  });\n\n  backBtnListener();\n}\n\nif (LANG == 'ru') {\n  console.log('Приветики)');\n};\n\nconsole.log(JSON.stringify(LANG));\n\nif (LANG == 'en') {\n  console.log('Хаюшки)');\n};\n\nchangeDisplay(renderIntro());\nintroPreset();"
+    },
+    {
+      "id": "./js/templates/game-1.js",
+      "identifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\templates\\game-1.js",
+      "name": "./js/templates/game-1.js",
+      "index": 5,
+      "index2": 4,
+      "size": 2391,
+      "cacheable": true,
+      "built": true,
+      "optional": false,
+      "prefetched": false,
+      "chunks": [
+        "main"
+      ],
+      "issuer": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+      "issuerId": "./js/main.js",
+      "issuerName": "./js/main.js",
+      "issuerPath": [
+        {
+          "id": "./js/main.js",
+          "identifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+          "name": "./js/main.js",
+          "profile": {
+            "factory": 66,
+            "building": 2501
+          }
+        }
+      ],
+      "profile": {
+        "factory": 17,
+        "building": 98,
+        "dependencies": 1
+      },
+      "failed": false,
+      "errors": 0,
+      "warnings": 0,
+      "assets": [],
+      "reasons": [
+        {
+          "moduleId": "./js/main.js",
+          "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+          "module": "./js/main.js",
+          "moduleName": "./js/main.js",
+          "type": "harmony side effect evaluation",
+          "userRequest": "./templates/game-1.js",
+          "loc": "5:0-50"
+        },
+        {
+          "moduleId": "./js/main.js",
+          "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+          "module": "./js/main.js",
+          "moduleName": "./js/main.js",
+          "type": "harmony import specifier",
+          "userRequest": "./templates/game-1.js",
+          "loc": "50:18-31"
+        }
+      ],
+      "providedExports": [
+        "default"
+      ],
+      "optimizationBailout": [],
+      "depth": 1,
+      "source": "import { createContentFromString } from '../utils.js';\n\nconst template = `<header class=\"header\">\n<div class=\"header__back\">\n  <button class=\"back\">\n    <img src=\"img/arrow_left.svg\" width=\"45\" height=\"45\" alt=\"Back\">\n    <img src=\"img/logo_small.svg\" width=\"101\" height=\"44\">\n  </button>\n</div>\n<h1 class=\"game__timer\">NN</h1>\n<div class=\"game__lives\">\n  <img src=\"img/heart__empty.svg\" class=\"game__heart\" alt=\"Life\" width=\"32\" height=\"32\">\n  <img src=\"img/heart__full.svg\" class=\"game__heart\" alt=\"Life\" width=\"32\" height=\"32\">\n  <img src=\"img/heart__full.svg\" class=\"game__heart\" alt=\"Life\" width=\"32\" height=\"32\">\n</div>\n</header>\n<div class=\"game\">\n<p class=\"game__task\">Угадайте для каждого изображения фото или рисунок?</p>\n<form class=\"game__content\">\n  <div class=\"game__option\">\n    <img src=\"http://placehold.it/468x458\" alt=\"Option 1\" width=\"468\" height=\"458\">\n    <label class=\"game__answer game__answer--photo\">\n      <input name=\"question1\" type=\"radio\" value=\"photo\">\n      <span>Фото</span>\n    </label>\n    <label class=\"game__answer game__answer--paint\">\n      <input name=\"question1\" type=\"radio\" value=\"paint\">\n      <span>Рисунок</span>\n    </label>\n  </div>\n  <div class=\"game__option\">\n    <img src=\"http://placehold.it/468x458\" alt=\"Option 2\" width=\"468\" height=\"458\">\n    <label class=\"game__answer  game__answer--photo\">\n      <input name=\"question2\" type=\"radio\" value=\"photo\">\n      <span>Фото</span>\n    </label>\n    <label class=\"game__answer  game__answer--paint\">\n      <input name=\"question2\" type=\"radio\" value=\"paint\">\n      <span>Рисунок</span>\n    </label>\n  </div>\n</form>\n<div class=\"stats\">\n  <ul class=\"stats\">\n    <li class=\"stats__result stats__result--wrong\"></li>\n    <li class=\"stats__result stats__result--slow\"></li>\n    <li class=\"stats__result stats__result--fast\"></li>\n    <li class=\"stats__result stats__result--correct\"></li>\n    <li class=\"stats__result stats__result--unknown\"></li>\n    <li class=\"stats__result stats__result--unknown\"></li>\n    <li class=\"stats__result stats__result--unknown\"></li>\n    <li class=\"stats__result stats__result--unknown\"></li>\n    <li class=\"stats__result stats__result--unknown\"></li>\n    <li class=\"stats__result stats__result--unknown\"></li>\n  </ul>\n</div>\n</div>`;\n\nconst page = createContentFromString(template);\n\nexport default (() => {\n  const clone = page.cloneNode(true);\n  return clone;\n});"
+    },
+    {
+      "id": "./js/templates/game-2.js",
+      "identifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\templates\\game-2.js",
+      "name": "./js/templates/game-2.js",
+      "index": 6,
+      "index2": 5,
+      "size": 1978,
+      "cacheable": true,
+      "built": true,
+      "optional": false,
+      "prefetched": false,
+      "chunks": [
+        "main"
+      ],
+      "issuer": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+      "issuerId": "./js/main.js",
+      "issuerName": "./js/main.js",
+      "issuerPath": [
+        {
+          "id": "./js/main.js",
+          "identifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+          "name": "./js/main.js",
+          "profile": {
+            "factory": 66,
+            "building": 2501
+          }
+        }
+      ],
+      "profile": {
+        "factory": 17,
+        "building": 98,
+        "dependencies": 1
+      },
+      "failed": false,
+      "errors": 0,
+      "warnings": 0,
+      "assets": [],
+      "reasons": [
+        {
+          "moduleId": "./js/main.js",
+          "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+          "module": "./js/main.js",
+          "moduleName": "./js/main.js",
+          "type": "harmony side effect evaluation",
+          "userRequest": "./templates/game-2.js",
+          "loc": "6:0-50"
+        },
+        {
+          "moduleId": "./js/main.js",
+          "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+          "module": "./js/main.js",
+          "moduleName": "./js/main.js",
+          "type": "harmony import specifier",
+          "userRequest": "./templates/game-2.js",
+          "loc": "76:24-37"
+        },
+        {
+          "moduleId": "./js/main.js",
+          "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+          "module": "./js/main.js",
+          "moduleName": "./js/main.js",
+          "type": "harmony import specifier",
+          "userRequest": "./templates/game-2.js",
+          "loc": "89:24-37"
+        }
+      ],
+      "providedExports": [
+        "default"
+      ],
+      "optimizationBailout": [],
+      "depth": 1,
+      "source": "import { createContentFromString } from '../utils.js';\n\nconst template = `<header class=\"header\">\n<div class=\"header__back\">\n  <button class=\"back\">\n    <img src=\"img/arrow_left.svg\" width=\"45\" height=\"45\" alt=\"Back\">\n    <img src=\"img/logo_small.svg\" width=\"101\" height=\"44\">\n  </button>\n</div>\n<h1 class=\"game__timer\">NN</h1>\n<div class=\"game__lives\">\n  <img src=\"img/heart__empty.svg\" class=\"game__heart\" alt=\"Life\" width=\"32\" height=\"32\">\n  <img src=\"img/heart__full.svg\" class=\"game__heart\" alt=\"Life\" width=\"32\" height=\"32\">\n  <img src=\"img/heart__full.svg\" class=\"game__heart\" alt=\"Life\" width=\"32\" height=\"32\">\n</div>\n</header>\n<div class=\"game\">\n<p class=\"game__task\">Угадай, фото или рисунок?</p>\n<form class=\"game__content  game__content--wide\">\n  <div class=\"game__option\">\n    <img src=\"http://placehold.it/705x455\" alt=\"Option 1\" width=\"705\" height=\"455\">\n    <label class=\"game__answer  game__answer--photo\">\n      <input name=\"question1\" type=\"radio\" value=\"photo\">\n      <span>Фото</span>\n    </label>\n    <label class=\"game__answer  game__answer--wide  game__answer--paint\">\n      <input name=\"question1\" type=\"radio\" value=\"paint\">\n      <span>Рисунок</span>\n    </label>\n  </div>\n</form>\n<div class=\"stats\">\n  <ul class=\"stats\">\n    <li class=\"stats__result stats__result--wrong\"></li>\n    <li class=\"stats__result stats__result--slow\"></li>\n    <li class=\"stats__result stats__result--fast\"></li>\n    <li class=\"stats__result stats__result--correct\"></li>\n    <li class=\"stats__result stats__result--wrong\"></li>\n    <li class=\"stats__result stats__result--unknown\"></li>\n    <li class=\"stats__result stats__result--slow\"></li>\n    <li class=\"stats__result stats__result--unknown\"></li>\n    <li class=\"stats__result stats__result--fast\"></li>\n    <li class=\"stats__result stats__result--unknown\"></li>\n  </ul>\n</div>\n</div>`;\n\nconst page = createContentFromString(template);\n\nexport default (() => {\n  const clone = page.cloneNode(true);\n  return clone;\n});"
+    },
+    {
+      "id": "./js/templates/game-3.js",
+      "identifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\templates\\game-3.js",
+      "name": "./js/templates/game-3.js",
+      "index": 7,
+      "index2": 6,
+      "size": 1935,
+      "cacheable": true,
+      "built": true,
+      "optional": false,
+      "prefetched": false,
+      "chunks": [
+        "main"
+      ],
+      "issuer": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+      "issuerId": "./js/main.js",
+      "issuerName": "./js/main.js",
+      "issuerPath": [
+        {
+          "id": "./js/main.js",
+          "identifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+          "name": "./js/main.js",
+          "profile": {
+            "factory": 66,
+            "building": 2501
+          }
+        }
+      ],
+      "profile": {
+        "factory": 17,
+        "building": 98,
+        "dependencies": 1
+      },
+      "failed": false,
+      "errors": 0,
+      "warnings": 0,
+      "assets": [],
+      "reasons": [
+        {
+          "moduleId": "./js/main.js",
+          "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+          "module": "./js/main.js",
+          "moduleName": "./js/main.js",
+          "type": "harmony side effect evaluation",
+          "userRequest": "./templates/game-3.js",
+          "loc": "7:0-52"
+        },
+        {
+          "moduleId": "./js/main.js",
+          "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+          "module": "./js/main.js",
+          "moduleName": "./js/main.js",
+          "type": "harmony import specifier",
+          "userRequest": "./templates/game-3.js",
+          "loc": "107:22-37"
+        }
+      ],
+      "providedExports": [
+        "default"
+      ],
+      "optimizationBailout": [],
+      "depth": 1,
+      "source": "import { createContentFromString } from '../utils.js';\n\nconst template = `<header class=\"header\">\n<div class=\"header__back\">\n  <button class=\"back\">\n    <img src=\"img/arrow_left.svg\" width=\"45\" height=\"45\" alt=\"Back\">\n    <img src=\"img/logo_small.svg\" width=\"101\" height=\"44\">\n  </button>\n</div>\n<h1 class=\"game__timer\">NN</h1>\n<div class=\"game__lives\">\n  <img src=\"img/heart__empty.svg\" class=\"game__heart\" alt=\"Life\" width=\"32\" height=\"32\">\n  <img src=\"img/heart__full.svg\" class=\"game__heart\" alt=\"Life\" width=\"32\" height=\"32\">\n  <img src=\"img/heart__full.svg\" class=\"game__heart\" alt=\"Life\" width=\"32\" height=\"32\">\n</div>\n</header>\n<div class=\"game\">\n<p class=\"game__task\">Найдите рисунок среди изображений</p>\n<form class=\"game__content  game__content--triple\">\n  <div class=\"game__option\">\n    <img src=\"http://placehold.it/304x455\" alt=\"Option 1\" width=\"304\" height=\"455\">\n  </div>\n  <div class=\"game__option  game__option--selected\">\n    <img src=\"http://placehold.it/304x455\" alt=\"Option 1\" width=\"304\" height=\"455\">\n  </div>\n  <div class=\"game__option\">\n    <img src=\"http://placehold.it/304x455\" alt=\"Option 1\" width=\"304\" height=\"455\">\n  </div>\n</form>\n<div class=\"stats\">\n  <ul class=\"stats\">\n    <li class=\"stats__result stats__result--wrong\"></li>\n    <li class=\"stats__result stats__result--slow\"></li>\n    <li class=\"stats__result stats__result--fast\"></li>\n    <li class=\"stats__result stats__result--correct\"></li>\n    <li class=\"stats__result stats__result--wrong\"></li>\n    <li class=\"stats__result stats__result--unknown\"></li>\n    <li class=\"stats__result stats__result--slow\"></li>\n    <li class=\"stats__result stats__result--unknown\"></li>\n    <li class=\"stats__result stats__result--fast\"></li>\n    <li class=\"stats__result stats__result--unknown\"></li>\n  </ul>\n</div>\n</div>`;\n\nconst page = createContentFromString(template);\n\nexport default (() => {\n  const clone = page.cloneNode(true);\n  return clone;\n});"
+    },
+    {
+      "id": "./js/templates/greeting.js",
+      "identifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\templates\\greeting.js",
+      "name": "./js/templates/greeting.js",
+      "index": 3,
+      "index2": 2,
+      "size": 883,
+      "cacheable": true,
+      "built": true,
+      "optional": false,
+      "prefetched": false,
+      "chunks": [
+        "main"
+      ],
+      "issuer": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+      "issuerId": "./js/main.js",
+      "issuerName": "./js/main.js",
+      "issuerPath": [
+        {
+          "id": "./js/main.js",
+          "identifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+          "name": "./js/main.js",
+          "profile": {
+            "factory": 66,
+            "building": 2501
+          }
+        }
+      ],
+      "profile": {
+        "factory": 17,
+        "building": 98,
+        "dependencies": 1
+      },
+      "failed": false,
+      "errors": 0,
+      "warnings": 0,
+      "assets": [],
+      "reasons": [
+        {
+          "moduleId": "./js/main.js",
+          "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+          "module": "./js/main.js",
+          "moduleName": "./js/main.js",
+          "type": "harmony side effect evaluation",
+          "userRequest": "./templates/greeting.js",
+          "loc": "3:0-53"
+        },
+        {
+          "moduleId": "./js/main.js",
+          "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+          "module": "./js/main.js",
+          "moduleName": "./js/main.js",
+          "type": "harmony import specifier",
+          "userRequest": "./templates/greeting.js",
+          "loc": "23:18-32"
+        }
+      ],
+      "providedExports": [
+        "default"
+      ],
+      "optimizationBailout": [],
+      "depth": 1,
+      "source": "import { createContentFromString } from '../utils.js';\n\nconst template = `<div class=\"greeting central--blur\">\n<div class=\"greeting__logo\"><img src=\"img/logo_big.png\" width=\"201\" height=\"89\" alt=\"Pixel Hunter\"></div>\n<h1 class=\"greeting__asterisk\">*</h1>\n<div class=\"greeting__challenge\">\n  <h3>Лучшие художники-фотореалисты бросают&nbsp;тебе&nbsp;вызов!</h3>\n  <p>Правила игры просты.<br>\n    Нужно отличить рисунок&nbsp;от фотографии и сделать выбор.<br>\n    Задача кажется тривиальной, но не думай, что все так просто.<br>\n    Фотореализм обманчив и коварен.<br>\n    Помни, главное — смотреть очень внимательно.</p>\n</div>\n<div class=\"greeting__continue\"><span><img src=\"img/arrow_right.svg\" width=\"64\" height=\"64\" alt=\"Next\"></span></div>\n</div>`;\n\nconst page = createContentFromString(template);\n\nexport default (() => {\n  const clone = page.cloneNode(true);\n  return clone;\n});"
+    },
+    {
+      "id": "./js/templates/intro.js",
+      "identifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\templates\\intro.js",
+      "name": "./js/templates/intro.js",
+      "index": 2,
+      "index2": 1,
+      "size": 407,
+      "cacheable": true,
+      "built": true,
+      "optional": false,
+      "prefetched": false,
+      "chunks": [
+        "main"
+      ],
+      "issuer": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+      "issuerId": "./js/main.js",
+      "issuerName": "./js/main.js",
+      "issuerPath": [
+        {
+          "id": "./js/main.js",
+          "identifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+          "name": "./js/main.js",
+          "profile": {
+            "factory": 66,
+            "building": 2501
+          }
+        }
+      ],
+      "profile": {
+        "factory": 17,
+        "building": 98,
+        "dependencies": 1
+      },
+      "failed": false,
+      "errors": 0,
+      "warnings": 0,
+      "assets": [],
+      "reasons": [
+        {
+          "moduleId": "./js/main.js",
+          "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+          "module": "./js/main.js",
+          "moduleName": "./js/main.js",
+          "type": "harmony side effect evaluation",
+          "userRequest": "./templates/intro.js",
+          "loc": "2:0-47"
+        },
+        {
+          "moduleId": "./js/main.js",
+          "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+          "module": "./js/main.js",
+          "moduleName": "./js/main.js",
+          "type": "harmony import specifier",
+          "userRequest": "./templates/intro.js",
+          "loc": "14:18-29"
+        },
+        {
+          "moduleId": "./js/main.js",
+          "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+          "module": "./js/main.js",
+          "moduleName": "./js/main.js",
+          "type": "harmony import specifier",
+          "userRequest": "./templates/intro.js",
+          "loc": "139:14-25"
+        }
+      ],
+      "providedExports": [
+        "default"
+      ],
+      "optimizationBailout": [],
+      "depth": 1,
+      "source": "import { createContentFromString } from '../utils.js';\n\nconst template = `<div id=\"intro\" class=\"intro\">\n<h1 class=\"intro__asterisk\">*</h1>\n<p class=\"intro__motto\"><sup>*</sup> Это не фото. Это рисунок маслом нидерландского художника-фотореалиста Tjalf Sparnaay.</p>\n</div>`;\n\nconst page = createContentFromString(template);\n\nexport default (() => {\n  const clone = page.cloneNode(true);\n  return clone;\n});"
+    },
+    {
+      "id": "./js/templates/rules.js",
+      "identifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\templates\\rules.js",
+      "name": "./js/templates/rules.js",
+      "index": 4,
+      "index2": 3,
+      "size": 1083,
+      "cacheable": true,
+      "built": true,
+      "optional": false,
+      "prefetched": false,
+      "chunks": [
+        "main"
+      ],
+      "issuer": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+      "issuerId": "./js/main.js",
+      "issuerName": "./js/main.js",
+      "issuerPath": [
+        {
+          "id": "./js/main.js",
+          "identifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+          "name": "./js/main.js",
+          "profile": {
+            "factory": 66,
+            "building": 2501
+          }
+        }
+      ],
+      "profile": {
+        "factory": 17,
+        "building": 98,
+        "dependencies": 1
+      },
+      "failed": false,
+      "errors": 0,
+      "warnings": 0,
+      "assets": [],
+      "reasons": [
+        {
+          "moduleId": "./js/main.js",
+          "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+          "module": "./js/main.js",
+          "moduleName": "./js/main.js",
+          "type": "harmony side effect evaluation",
+          "userRequest": "./templates/rules.js",
+          "loc": "4:0-47"
+        },
+        {
+          "moduleId": "./js/main.js",
+          "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+          "module": "./js/main.js",
+          "moduleName": "./js/main.js",
+          "type": "harmony import specifier",
+          "userRequest": "./templates/rules.js",
+          "loc": "32:18-29"
+        }
+      ],
+      "providedExports": [
+        "default"
+      ],
+      "optimizationBailout": [],
+      "depth": 1,
+      "source": "import { createContentFromString } from '../utils.js';\n\nconst template = `<div>\n<header class=\"header\">\n  <div class=\"header__back\">\n    <button class=\"back\">\n      <img src=\"img/arrow_left.svg\" width=\"45\" height=\"45\" alt=\"Back\">\n      <img src=\"img/logo_small.svg\" width=\"101\" height=\"44\">\n    </button>\n  </div>\n</header>\n<div class=\"rules\">\n<h1 class=\"rules__title\">Правила</h1>\n<p class=\"rules__description\">Угадай 10 раз для каждого изображения фото <img\n  src=\"img/photo_icon.png\" width=\"16\" height=\"16\"> или рисунок <img\n  src=\"img/paint_icon.png\" width=\"16\" height=\"16\" alt=\"\">.<br>\n  Фотографиями или рисунками могут быть оба изображения.<br>\n  На каждую попытку отводится 30 секунд.<br>\n  Ошибиться можно не более 3 раз.<br>\n  <br>\n  Готовы?\n</p>\n<form class=\"rules__form\">\n  <input class=\"rules__input\" type=\"text\" placeholder=\"Ваше Имя\">\n  <button class=\"rules__button  continue\" type=\"submit\" disabled>Go!</button>\n</form>\n</div>\n</div>`;\n\nconst page = createContentFromString(template);\n\nexport default (() => {\n  const clone = page.cloneNode(true);\n  return clone;\n});"
+    },
+    {
+      "id": "./js/templates/stats.js",
+      "identifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\templates\\stats.js",
+      "name": "./js/templates/stats.js",
+      "index": 8,
+      "index2": 7,
+      "size": 4305,
+      "cacheable": true,
+      "built": true,
+      "optional": false,
+      "prefetched": false,
+      "chunks": [
+        "main"
+      ],
+      "issuer": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+      "issuerId": "./js/main.js",
+      "issuerName": "./js/main.js",
+      "issuerPath": [
+        {
+          "id": "./js/main.js",
+          "identifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+          "name": "./js/main.js",
+          "profile": {
+            "factory": 66,
+            "building": 2501
+          }
+        }
+      ],
+      "profile": {
+        "factory": 17,
+        "building": 98,
+        "dependencies": 1
+      },
+      "failed": false,
+      "errors": 0,
+      "warnings": 0,
+      "assets": [],
+      "reasons": [
+        {
+          "moduleId": "./js/main.js",
+          "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+          "module": "./js/main.js",
+          "moduleName": "./js/main.js",
+          "type": "harmony side effect evaluation",
+          "userRequest": "./templates/stats.js",
+          "loc": "8:0-47"
+        },
+        {
+          "moduleId": "./js/main.js",
+          "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+          "module": "./js/main.js",
+          "moduleName": "./js/main.js",
+          "type": "harmony import specifier",
+          "userRequest": "./templates/stats.js",
+          "loc": "121:20-31"
+        }
+      ],
+      "providedExports": [
+        "default"
+      ],
+      "optimizationBailout": [],
+      "depth": 1,
+      "source": "import { createContentFromString } from '../utils.js';\n\nconst template = `<header class=\"header\">\n<div class=\"header__back\">\n  <button class=\"back\">\n    <img src=\"img/arrow_left.svg\" width=\"45\" height=\"45\" alt=\"Back\">\n    <img src=\"img/logo_small.svg\" width=\"101\" height=\"44\">\n  </button>\n</div>\n</header>\n<div class=\"result\">\n<h1>Победа!</h1>\n<table class=\"result__table\">\n  <tr>\n    <td class=\"result__number\">1.</td>\n    <td colspan=\"2\">\n      <ul class=\"stats\">\n        <li class=\"stats__result stats__result--wrong\"></li>\n        <li class=\"stats__result stats__result--slow\"></li>\n        <li class=\"stats__result stats__result--fast\"></li>\n        <li class=\"stats__result stats__result--correct\"></li>\n        <li class=\"stats__result stats__result--wrong\"></li>\n        <li class=\"stats__result stats__result--unknown\"></li>\n        <li class=\"stats__result stats__result--slow\"></li>\n        <li class=\"stats__result stats__result--unknown\"></li>\n        <li class=\"stats__result stats__result--fast\"></li>\n        <li class=\"stats__result stats__result--unknown\"></li>\n      </ul>\n    </td>\n    <td class=\"result__points\">×&nbsp;100</td>\n    <td class=\"result__total\">900</td>\n  </tr>\n  <tr>\n    <td></td>\n    <td class=\"result__extra\">Бонус за скорость:</td>\n    <td class=\"result__extra\">1&nbsp;<span class=\"stats__result stats__result--fast\"></span></td>\n    <td class=\"result__points\">×&nbsp;50</td>\n    <td class=\"result__total\">50</td>\n  </tr>\n  <tr>\n    <td></td>\n    <td class=\"result__extra\">Бонус за жизни:</td>\n    <td class=\"result__extra\">2&nbsp;<span class=\"stats__result stats__result--alive\"></span></td>\n    <td class=\"result__points\">×&nbsp;50</td>\n    <td class=\"result__total\">100</td>\n  </tr>\n  <tr>\n    <td></td>\n    <td class=\"result__extra\">Штраф за медлительность:</td>\n    <td class=\"result__extra\">2&nbsp;<span class=\"stats__result stats__result--slow\"></span></td>\n    <td class=\"result__points\">×&nbsp;50</td>\n    <td class=\"result__total\">-100</td>\n  </tr>\n  <tr>\n    <td colspan=\"5\" class=\"result__total  result__total--final\">950</td>\n  </tr>\n</table>\n<table class=\"result__table\">\n  <tr>\n    <td class=\"result__number\">2.</td>\n    <td>\n      <ul class=\"stats\">\n        <li class=\"stats__result stats__result--wrong\"></li>\n        <li class=\"stats__result stats__result--slow\"></li>\n        <li class=\"stats__result stats__result--fast\"></li>\n        <li class=\"stats__result stats__result--correct\"></li>\n        <li class=\"stats__result stats__result--wrong\"></li>\n        <li class=\"stats__result stats__result--unknown\"></li>\n        <li class=\"stats__result stats__result--slow\"></li>\n        <li class=\"stats__result stats__result--wrong\"></li>\n        <li class=\"stats__result stats__result--fast\"></li>\n        <li class=\"stats__result stats__result--wrong\"></li>\n      </ul>\n    </td>\n    <td class=\"result__total\"></td>\n    <td class=\"result__total  result__total--final\">fail</td>\n  </tr>\n</table>\n<table class=\"result__table\">\n  <tr>\n    <td class=\"result__number\">3.</td>\n    <td colspan=\"2\">\n      <ul class=\"stats\">\n        <li class=\"stats__result stats__result--wrong\"></li>\n        <li class=\"stats__result stats__result--slow\"></li>\n        <li class=\"stats__result stats__result--fast\"></li>\n        <li class=\"stats__result stats__result--correct\"></li>\n        <li class=\"stats__result stats__result--wrong\"></li>\n        <li class=\"stats__result stats__result--unknown\"></li>\n        <li class=\"stats__result stats__result--slow\"></li>\n        <li class=\"stats__result stats__result--unknown\"></li>\n        <li class=\"stats__result stats__result--fast\"></li>\n        <li class=\"stats__result stats__result--unknown\"></li>\n      </ul>\n    </td>\n    <td class=\"result__points\">×&nbsp;100</td>\n    <td class=\"result__total\">900</td>\n  </tr>\n  <tr>\n    <td></td>\n    <td class=\"result__extra\">Бонус за жизни:</td>\n    <td class=\"result__extra\">2&nbsp;<span class=\"stats__result stats__result--alive\"></span></td>\n    <td class=\"result__points\">×&nbsp;50</td>\n    <td class=\"result__total\">100</td>\n  </tr>\n  <tr>\n    <td colspan=\"5\" class=\"result__total  result__total--final\">950</td>\n  </tr>\n</table>\n</div>`;\n\nconst page = createContentFromString(template);\n\nexport default (() => {\n  const clone = page.cloneNode(true);\n  return clone;\n});"
+    },
+    {
+      "id": "./js/utils.js",
+      "identifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\utils.js",
+      "name": "./js/utils.js",
+      "index": 1,
+      "index2": 0,
+      "size": 372,
+      "cacheable": true,
+      "built": true,
+      "optional": false,
+      "prefetched": false,
+      "chunks": [
+        "main"
+      ],
+      "issuer": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+      "issuerId": "./js/main.js",
+      "issuerName": "./js/main.js",
+      "issuerPath": [
+        {
+          "id": "./js/main.js",
+          "identifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+          "name": "./js/main.js",
+          "profile": {
+            "factory": 66,
+            "building": 2501
+          }
+        }
+      ],
+      "profile": {
+        "factory": 17,
+        "building": 98,
+        "dependencies": 1
+      },
+      "failed": false,
+      "errors": 0,
+      "warnings": 0,
+      "assets": [],
+      "reasons": [
+        {
+          "moduleId": "./js/main.js",
+          "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+          "module": "./js/main.js",
+          "moduleName": "./js/main.js",
+          "type": "harmony import specifier",
+          "userRequest": "./utils.js",
+          "loc": "14:4-17"
+        },
+        {
+          "moduleId": "./js/templates/intro.js",
+          "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\templates\\intro.js",
+          "module": "./js/templates/intro.js",
+          "moduleName": "./js/templates/intro.js",
+          "type": "harmony side effect evaluation",
+          "userRequest": "../utils.js",
+          "loc": "1:0-54"
+        },
+        {
+          "moduleId": "./js/main.js",
+          "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+          "module": "./js/main.js",
+          "moduleName": "./js/main.js",
+          "type": "harmony import specifier",
+          "userRequest": "./utils.js",
+          "loc": "23:4-17"
+        },
+        {
+          "moduleId": "./js/main.js",
+          "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+          "module": "./js/main.js",
+          "moduleName": "./js/main.js",
+          "type": "harmony import specifier",
+          "userRequest": "./utils.js",
+          "loc": "32:4-17"
+        },
+        {
+          "moduleId": "./js/main.js",
+          "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+          "module": "./js/main.js",
+          "moduleName": "./js/main.js",
+          "type": "harmony import specifier",
+          "userRequest": "./utils.js",
+          "loc": "50:4-17"
+        },
+        {
+          "moduleId": "./js/main.js",
+          "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+          "module": "./js/main.js",
+          "moduleName": "./js/main.js",
+          "type": "harmony import specifier",
+          "userRequest": "./utils.js",
+          "loc": "76:10-23"
+        },
+        {
+          "moduleId": "./js/main.js",
+          "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+          "module": "./js/main.js",
+          "moduleName": "./js/main.js",
+          "type": "harmony import specifier",
+          "userRequest": "./utils.js",
+          "loc": "89:10-23"
+        },
+        {
+          "moduleId": "./js/main.js",
+          "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+          "module": "./js/main.js",
+          "moduleName": "./js/main.js",
+          "type": "harmony import specifier",
+          "userRequest": "./utils.js",
+          "loc": "107:8-21"
+        },
+        {
+          "moduleId": "./js/main.js",
+          "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+          "module": "./js/main.js",
+          "moduleName": "./js/main.js",
+          "type": "harmony import specifier",
+          "userRequest": "./utils.js",
+          "loc": "121:6-19"
+        },
+        {
+          "moduleId": "./js/main.js",
+          "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+          "module": "./js/main.js",
+          "moduleName": "./js/main.js",
+          "type": "harmony import specifier",
+          "userRequest": "./utils.js",
+          "loc": "139:0-13"
+        },
+        {
+          "moduleId": "./js/templates/greeting.js",
+          "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\templates\\greeting.js",
+          "module": "./js/templates/greeting.js",
+          "moduleName": "./js/templates/greeting.js",
+          "type": "harmony side effect evaluation",
+          "userRequest": "../utils.js",
+          "loc": "1:0-54"
+        },
+        {
+          "moduleId": "./js/templates/greeting.js",
+          "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\templates\\greeting.js",
+          "module": "./js/templates/greeting.js",
+          "moduleName": "./js/templates/greeting.js",
+          "type": "harmony import specifier",
+          "userRequest": "../utils.js",
+          "loc": "17:13-36"
+        },
+        {
+          "moduleId": "./js/main.js",
+          "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\main.js",
+          "module": "./js/main.js",
+          "moduleName": "./js/main.js",
+          "type": "harmony side effect evaluation",
+          "userRequest": "./utils.js",
+          "loc": "1:0-43"
+        },
+        {
+          "moduleId": "./js/templates/intro.js",
+          "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\templates\\intro.js",
+          "module": "./js/templates/intro.js",
+          "moduleName": "./js/templates/intro.js",
+          "type": "harmony import specifier",
+          "userRequest": "../utils.js",
+          "loc": "8:13-36"
+        },
+        {
+          "moduleId": "./js/templates/game-2.js",
+          "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\templates\\game-2.js",
+          "module": "./js/templates/game-2.js",
+          "moduleName": "./js/templates/game-2.js",
+          "type": "harmony side effect evaluation",
+          "userRequest": "../utils.js",
+          "loc": "1:0-54"
+        },
+        {
+          "moduleId": "./js/templates/game-2.js",
+          "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\templates\\game-2.js",
+          "module": "./js/templates/game-2.js",
+          "moduleName": "./js/templates/game-2.js",
+          "type": "harmony import specifier",
+          "userRequest": "../utils.js",
+          "loc": "48:13-36"
+        },
+        {
+          "moduleId": "./js/templates/game-1.js",
+          "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\templates\\game-1.js",
+          "module": "./js/templates/game-1.js",
+          "moduleName": "./js/templates/game-1.js",
+          "type": "harmony side effect evaluation",
+          "userRequest": "../utils.js",
+          "loc": "1:0-54"
+        },
+        {
+          "moduleId": "./js/templates/game-1.js",
+          "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\templates\\game-1.js",
+          "module": "./js/templates/game-1.js",
+          "moduleName": "./js/templates/game-1.js",
+          "type": "harmony import specifier",
+          "userRequest": "../utils.js",
+          "loc": "59:13-36"
+        },
+        {
+          "moduleId": "./js/templates/game-3.js",
+          "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\templates\\game-3.js",
+          "module": "./js/templates/game-3.js",
+          "moduleName": "./js/templates/game-3.js",
+          "type": "harmony side effect evaluation",
+          "userRequest": "../utils.js",
+          "loc": "1:0-54"
+        },
+        {
+          "moduleId": "./js/templates/game-3.js",
+          "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\templates\\game-3.js",
+          "module": "./js/templates/game-3.js",
+          "moduleName": "./js/templates/game-3.js",
+          "type": "harmony import specifier",
+          "userRequest": "../utils.js",
+          "loc": "46:13-36"
+        },
+        {
+          "moduleId": "./js/templates/rules.js",
+          "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\templates\\rules.js",
+          "module": "./js/templates/rules.js",
+          "moduleName": "./js/templates/rules.js",
+          "type": "harmony side effect evaluation",
+          "userRequest": "../utils.js",
+          "loc": "1:0-54"
+        },
+        {
+          "moduleId": "./js/templates/rules.js",
+          "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\templates\\rules.js",
+          "module": "./js/templates/rules.js",
+          "moduleName": "./js/templates/rules.js",
+          "type": "harmony import specifier",
+          "userRequest": "../utils.js",
+          "loc": "30:13-36"
+        },
+        {
+          "moduleId": "./js/templates/stats.js",
+          "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\templates\\stats.js",
+          "module": "./js/templates/stats.js",
+          "moduleName": "./js/templates/stats.js",
+          "type": "harmony side effect evaluation",
+          "userRequest": "../utils.js",
+          "loc": "1:0-54"
+        },
+        {
+          "moduleId": "./js/templates/stats.js",
+          "moduleIdentifier": "C:\\github\\pixelhunter\\node_modules\\babel-loader\\lib\\index.js!C:\\github\\pixelhunter\\js\\templates\\stats.js",
+          "module": "./js/templates/stats.js",
+          "moduleName": "./js/templates/stats.js",
+          "type": "harmony import specifier",
+          "userRequest": "../utils.js",
+          "loc": "112:13-36"
+        }
+      ],
+      "providedExports": [
+        "createContentFromString",
+        "changeDisplay"
+      ],
+      "optimizationBailout": [],
+      "depth": 1,
+      "source": "const createContentFromString = stringTemplate => {\n  const element = document.createElement(`template`);\n  element.innerHTML = stringTemplate;\n  return element.content;\n};\n\nconst changeDisplay = content => {\n  const display = document.querySelector(`#main`);\n  display.innerHTML = ``;\n  display.appendChild(content);\n};\n\nexport { createContentFromString, changeDisplay };"
+    }
+  ],
+  "filteredModules": 0,
+  "children": []
+}

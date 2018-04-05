@@ -1,7 +1,6 @@
 import {createContentFromString} from '../utils.js';
 
-const template = `<div id="main" class="central__content">
-<div>
+const template = `<div>
 <header class="header">
   <div class="header__back">
     <button class="back">
@@ -25,7 +24,6 @@ const template = `<div id="main" class="central__content">
   <input class="rules__input" type="text" placeholder="Ваше Имя">
   <button class="rules__button  continue" type="submit" disabled>Go!</button>
 </form>
-</div>
 </div>
 </div>`;
 

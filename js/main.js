@@ -132,5 +132,15 @@ function gameThreePreset() {
   backBtnListener();
 }
 
+// if (LANG == 'ru') {
+//   console.log('Приветики)');
+// };
+
+// console.log(JSON.stringify(LANG));
+
+// if (LANG == 'en') {
+//   console.log('Хаюшки)');
+// };
+
 changeDisplay(renderIntro());
 introPreset();

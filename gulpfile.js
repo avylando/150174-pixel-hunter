@@ -11,7 +11,11 @@ const mqpacker = require('css-mqpacker');
 const minify = require('gulp-csso');
 const rename = require('gulp-rename');
 const imagemin = require('gulp-imagemin');
-const webpack  = require('webpack-stream');
+const chalk = require('chalk');
+const mocha = require('gulp-mocha');
+
+const webpack = require('webpack');
+const config = require('./webpack.config.js');
 
 gulp.task('style', function () {
   return gulp.src('sass/style.scss')
@@ -36,20 +40,37 @@ gulp.task('style', function () {
     .pipe(gulp.dest('build/css'));
 });
 
-gulp.task('scripts', function () {
-  return gulp.src('js/main.js')
-    .pipe(plumber())
-    .pipe(webpack({
-      output: {
-        filename: 'app.js'
-      },
-      devtool: 'source-map',
-    }))
-    // .pipe(rename('app.js'))
-    .pipe(gulp.dest('build/js/'));
+gulp.task('scripts', function (done) {
+  webpack(config).run(onComplete(done));
+
+  function onComplete(done) {
+    return function(err, stats) {
+        if (err) {
+            console.log(chalk.red('Error: ' + err));
+            if (done) {
+              done();
+            }
+
+        } else {
+          Object.keys(stats.compilation.assets).forEach(function(key) {
+            console.log('Webpack: output ' + chalk.green(key))
+          });
+          console.log(chalk.blue('Complete!'));
+
+          if (done) {
+              done();
+          }
+        }
+    }
+  }
 });
 
 gulp.task('test', function () {
+  return gulp.src('js/**/*.test.js', {read: false})
+  .pipe(mocha({
+    require: ['babel-register'],
+    reporter: 'spec'
+  }))
 });
 
 gulp.task('imagemin', ['copy'], function () {
