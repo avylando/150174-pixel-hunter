@@ -100,4 +100,20 @@ describe(`Timer`, () => {
     const Timer = setTimer(50);
     assert.equal(50, Timer.time);
   });
+
+  it(`should return 49 with tick method`, () => {
+    const Timer = setTimer(50);
+    assert.equal(49, Timer.tick());
+  });
+
+  it(`should return Time is up! with expired time`, () => {
+    const Timer = setTimer(1);
+    assert.equal(`Time is up!`, Timer.tick());
+  });
+
+  it(`should return Error with invalid value`, () => {
+    assert.throws(() => setTimer(0), /invalid time value/);
+    assert.throws(() => setTimer([]), /invalid time value/);
+    assert.throws(() => setTimer(null), /invalid time value/);
+  });
 });

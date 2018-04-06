@@ -45,11 +45,12 @@ const setTimer = (time) => {
     }
 
     tick() {
+      this.time--;
+
       if (this.time === 0) {
         return `Time is up!`;
       }
 
-      this.time--;
       return this.time;
     }
   }
